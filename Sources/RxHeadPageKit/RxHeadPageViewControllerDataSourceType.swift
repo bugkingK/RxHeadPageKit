@@ -20,17 +20,20 @@ public protocol RxHeadPageViewControllerDataSourceType {
 }
 
 public struct RxHeadPageConfigurationModel {
+    let originIndex: Int
     let headerView: UIView
     let headerHeight: CGFloat
     let menuView: UIView
     let menuHeight: CGFloat
     let viewControllers: [HeadPageViewControllerType]
     
-    public init(headerView: UIView,
+    public init(originIndex: Int = 0,
+                headerView: UIView,
                 headerHeight: CGFloat,
                 menuView: UIView,
                 menuHeight: CGFloat,
                 viewControllers: [HeadPageViewControllerType]) {
+        self.originIndex = originIndex
         self.headerView = headerView
         self.headerHeight = headerHeight
         self.menuView = menuView
@@ -80,6 +83,10 @@ extension RxHeadPageViewControllerReactiveArrayDataSource: RxHeadPageViewControl
 }
 
 extension RxHeadPageViewControllerReactiveArrayDataSource: HeadPageControllerDataSource {
+    public func originIndexFor(_ pageController: HeadPageViewController) -> Int {
+        return model?.originIndex ?? 0
+    }
+    
     public func headerViewFor(_ pageController: HeadPageViewController) -> UIView? {
         return model?.headerView
     }
