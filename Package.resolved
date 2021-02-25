@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "HeadPageKit",
+        "repositoryURL": "https://github.com/bugkingK/HeadPageKit",
+        "state": {
+          "branch": null,
+          "revision": "e37996094c1ae3c420b6bcb3c9085c97d5dfdf8d",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "RxSwift",
+        "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "7e01c05f25c025143073eaa3be3532f9375c614b",
+          "version": "6.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

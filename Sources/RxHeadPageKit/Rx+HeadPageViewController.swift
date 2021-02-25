@@ -31,15 +31,11 @@ extension Reactive where Base: HeadPageViewController {
             
             let subscription = source
                 .asObservable()
-                .observeOn(MainScheduler())
-                .catchError { _ in
-                    return Observable.empty()
-                }
+                .observe(on: MainScheduler())
+                .catch { _ in Observable.empty() }
                 .concat(Observable.never())
-                .takeUntil(base.rx.deallocated)
-                .subscribe { (event) in
-                    dataSource.pageController(base, observedEvent: event)
-                }
+                .take(until: base.rx.deallocated)
+                .subscribe { dataSource.pageController(base, observedEvent: $0) }
             
             return Disposables.create { [weak base] in
                 guard let base = base else { return }
