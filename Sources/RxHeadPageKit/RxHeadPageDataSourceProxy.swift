@@ -47,6 +47,14 @@ extension RxHeadPageDataSourceProxy: HeadPageControllerDataSource {
     func menuViewHeightFor(_ pageController: HeadPageViewController) -> CGFloat? {
         return forwardToDelegate()?.menuViewHeightFor(pageController)
     }
+
+    func navigationViewFor(_ pageController: HeadPageViewController) -> UIView? {
+        return forwardToDelegate()?.navigationViewFor(pageController)
+    }
+
+    func navigationViewHeightFor(_ pageController: HeadPageViewController) -> CGFloat {
+        return forwardToDelegate()?.navigationViewHeightFor(pageController) ?? 0
+    }
     
     func numberOfViewControllers(in pageController: HeadPageViewController) -> Int {
         return forwardToDelegate()?.numberOfViewControllers(in: pageController) ?? 0
