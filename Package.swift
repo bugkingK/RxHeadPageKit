@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "RxHeadPageKit", targets: ["RxHeadPageKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/bugkingK/HeadPageKit", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/bugkingK/HeadPageKit", .upToNextMajor(from: "2.0.1")),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.0.0"))
     ],
     targets: [
