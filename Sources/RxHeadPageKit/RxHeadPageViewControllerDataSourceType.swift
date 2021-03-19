@@ -25,8 +25,6 @@ public struct RxHeadPageConfigurationModel {
     let headerHeight: CGFloat?
     let menuView: UIView
     let menuHeight: CGFloat
-    let navigationView: UIView?
-    let navigationHeight: CGFloat?
     let viewControllers: [HeadPageViewControllerType]
     
     public init(originIndex: Int = 0,
@@ -34,16 +32,12 @@ public struct RxHeadPageConfigurationModel {
                 headerHeight: CGFloat? = nil,
                 menuView: UIView,
                 menuHeight: CGFloat,
-                navigationView: UIView? = nil,
-                navigationHeight: CGFloat? = nil,
                 viewControllers: [HeadPageViewControllerType]) {
         self.originIndex = originIndex
         self.headerView = headerView
         self.headerHeight = headerHeight
         self.menuView = menuView
         self.menuHeight = menuHeight
-        self.navigationView = navigationView
-        self.navigationHeight = navigationHeight
         self.viewControllers = viewControllers
     }
 }
@@ -109,14 +103,6 @@ extension RxHeadPageViewControllerReactiveArrayDataSource: HeadPageControllerDat
         return model?.menuHeight
     }
 
-    public func navigationViewFor(_ pageController: HeadPageViewController) -> UIView? {
-        return model?.navigationView
-    }
-
-    public func navigationViewHeightFor(_ pageController: HeadPageViewController) -> CGFloat {
-        return model?.navigationHeight ?? 0
-    }
-    
     public func numberOfViewControllers(in pageController: HeadPageViewController) -> Int {
         return model?.viewControllers.count ?? 0
     }
