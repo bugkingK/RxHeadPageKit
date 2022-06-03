@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "HeadPageKit",
-        "repositoryURL": "https://github.com/bugkingK/HeadPageKit",
+        "repositoryURL": "https://github.com/bugkingK/HeadPageKit.git",
         "state": {
-          "branch": null,
-          "revision": "c30a19e2a953df340775ed08407fd0275c54deda",
-          "version": "2.0.1"
+          "branch": "example",
+          "revision": "8545f8faa11b6717677680edc149ea563d4664e3",
+          "version": null
         }
       },
       {

@@ -21,23 +21,32 @@ public protocol RxHeadPageViewControllerDataSourceType {
 
 public struct RxHeadPageConfigurationModel {
     let originIndex: Int
+    let sourceView: UIView?
     let headerView: UIView?
     let headerHeight: CGFloat?
-    let menuView: UIView
-    let menuHeight: CGFloat
+    let menuView: (UIView & MenuViewProtocol)?
+    let menuViewHeight: CGFloat
+    let menuViewPinHeight: CGFloat
+    let contentInset: UIEdgeInsets
     let viewControllers: [HeadPageViewControllerType]
     
     public init(originIndex: Int = 0,
+                sourceView: UIView? = nil,
                 headerView: UIView? = nil,
                 headerHeight: CGFloat? = nil,
-                menuView: UIView,
+                menuView: (UIView & MenuViewProtocol)?,
                 menuHeight: CGFloat,
+                menuViewPinHeight: CGFloat = 0,
+                contentInset: UIEdgeInsets = .zero,
                 viewControllers: [HeadPageViewControllerType]) {
         self.originIndex = originIndex
+        self.sourceView = sourceView
         self.headerView = headerView
         self.headerHeight = headerHeight
         self.menuView = menuView
-        self.menuHeight = menuHeight
+        self.menuViewHeight = menuHeight
+        self.menuViewPinHeight = menuViewPinHeight
+        self.contentInset = contentInset
         self.viewControllers = viewControllers
     }
 }
@@ -82,9 +91,17 @@ extension RxHeadPageViewControllerReactiveArrayDataSource: RxHeadPageViewControl
     
 }
 
-extension RxHeadPageViewControllerReactiveArrayDataSource: HeadPageControllerDataSource {
-    public func originIndexFor(_ pageController: HeadPageViewController) -> Int {
-        return model?.originIndex ?? 0
+extension RxHeadPageViewControllerReactiveArrayDataSource: HeadPageViewControllerDataSource {
+    public func sourceViewFor(_ pageController: HeadPageViewController) -> UIView? {
+        return model?.sourceView
+    }
+    
+    public func numberOfViewControllers(in pageController: HeadPageViewController) -> Int {
+        return model?.viewControllers.count ?? 0
+    }
+    
+    public func pageController(_ pageController: HeadPageViewController, viewControllerAt index: Int) -> (UIViewController & HeadPageChildViewController) {
+        return vcFactory(index, model!.viewControllers[index])
     }
     
     public func headerViewFor(_ pageController: HeadPageViewController) -> UIView? {
@@ -95,20 +112,23 @@ extension RxHeadPageViewControllerReactiveArrayDataSource: HeadPageControllerDat
         return model?.headerHeight
     }
     
-    public func menuViewFor(_ pageController: HeadPageViewController) -> UIView? {
+    public func menuViewFor(_ pageController: HeadPageViewController) -> (UIView & MenuViewProtocol)? {
         return model?.menuView
     }
     
     public func menuViewHeightFor(_ pageController: HeadPageViewController) -> CGFloat? {
-        return model?.menuHeight
+        return model?.menuViewHeight
+    }
+    
+    public func menuViewPinHeightFor(_ pageController: HeadPageViewController) -> CGFloat {
+        return model?.menuViewPinHeight ?? 0
     }
 
-    public func numberOfViewControllers(in pageController: HeadPageViewController) -> Int {
-        return model?.viewControllers.count ?? 0
+    public func originIndexFor(_ pageController: HeadPageViewController) -> Int {
+        return model?.originIndex ?? 0
     }
     
-    public func pageController(_ pageController: HeadPageViewController, viewControllerAt index: Int) -> (UIViewController & HeadPageChildViewController) {
-        return vcFactory(index, model!.viewControllers[index])
+    public func contentInsetFor(_ pageController: HeadPageViewController) -> UIEdgeInsets {
+        return model?.contentInset ?? .zero
     }
-    
 }

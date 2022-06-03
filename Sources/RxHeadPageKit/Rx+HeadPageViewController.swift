@@ -22,7 +22,7 @@ extension Reactive where Base: HeadPageViewController {
         }
     }
     
-    private func configuration<DataSource: HeadPageControllerDataSource & RxHeadPageViewControllerDataSourceType, O: ObservableType>
+    private func configuration<DataSource: HeadPageViewControllerDataSource & RxHeadPageViewControllerDataSourceType, O: ObservableType>
     (dataSource: DataSource)
     -> (_ source: O) -> Disposable where  O.Element == DataSource.Element {
         RxHeadPageDataSourceProxy.setCurrentDelegate(nil, to: base)
@@ -47,7 +47,7 @@ extension Reactive where Base: HeadPageViewController {
         }
     }
     
-    private var dataSource: DelegateProxy<HeadPageViewController, HeadPageControllerDataSource> {
+    private var dataSource: DelegateProxy<HeadPageViewController, HeadPageViewControllerDataSource> {
         return RxHeadPageDataSourceProxy.proxy(for: self.base)
     }
     
@@ -56,23 +56,23 @@ extension Reactive where Base: HeadPageViewController {
     }
     
     public var willCache: ControlEvent<Int> {
-        return delegate.willCache
+        return .init(events: delegate.willCache.asObserver())
     }
 
     public var willDisplay: ControlEvent<Int> {
-        return delegate.willDisplay
+        return .init(events: delegate.willDisplay.asObserver())
     }
     
     public var didDisplay: ControlEvent<Int> {
-        return delegate.didDisplay
+        return .init(events: delegate.didDisplay.asObserver())
     }
     
     public var isAdsorption: ControlEvent<Bool> {
-        return delegate.isAdsorption
+        return .init(events: delegate.isAdsorption.asObserver())
     }
     
     public var didContentScroll: ControlEvent<UIScrollView> {
-        return delegate.didContentScroll
+        return .init(events: delegate.didContentScroll.asObserver())
     }
     
 }

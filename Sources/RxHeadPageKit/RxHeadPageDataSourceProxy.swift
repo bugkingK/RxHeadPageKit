@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import HeadPageKit
 
-final class RxHeadPageDataSourceProxy: DelegateProxy<HeadPageViewController, HeadPageControllerDataSource> {
+final class RxHeadPageDataSourceProxy: DelegateProxy<HeadPageViewController, HeadPageViewControllerDataSource> {
     
     init(headPageViewController: HeadPageViewController) {
         super.init(parentObject: headPageViewController, delegateProxy: RxHeadPageDataSourceProxy.self)
@@ -20,18 +20,18 @@ final class RxHeadPageDataSourceProxy: DelegateProxy<HeadPageViewController, Hea
         self.register { RxHeadPageDataSourceProxy(headPageViewController: $0) }
     }
     
-    static func currentDelegate(for object: HeadPageViewController) -> HeadPageControllerDataSource? {
+    static func currentDelegate(for object: HeadPageViewController) -> HeadPageViewControllerDataSource? {
         return object.dataSource
     }
     
-    static func setCurrentDelegate(_ delegate: HeadPageControllerDataSource?, to object: HeadPageViewController) {
+    static func setCurrentDelegate(_ delegate: HeadPageViewControllerDataSource?, to object: HeadPageViewController) {
         object.dataSource = delegate
     }
 }
 
 extension RxHeadPageDataSourceProxy: DelegateProxyType { }
 
-extension RxHeadPageDataSourceProxy: HeadPageControllerDataSource {
+extension RxHeadPageDataSourceProxy: HeadPageViewControllerDataSource {
     func headerViewFor(_ pageController: HeadPageViewController) -> UIView? {
         return forwardToDelegate()?.headerViewFor(pageController)
     }
@@ -40,7 +40,7 @@ extension RxHeadPageDataSourceProxy: HeadPageControllerDataSource {
         return forwardToDelegate()?.headerViewHeightFor(pageController)
     }
     
-    func menuViewFor(_ pageController: HeadPageViewController) -> UIView? {
+    func menuViewFor(_ pageController: HeadPageViewController) -> (UIView & MenuViewProtocol)? {
         return forwardToDelegate()?.menuViewFor(pageController)
     }
     
