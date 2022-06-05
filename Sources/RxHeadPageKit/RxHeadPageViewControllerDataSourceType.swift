@@ -19,12 +19,13 @@ public protocol RxHeadPageViewControllerDataSourceType {
     func pageController(_ pageController: HeadPageViewController, observedEvent: Event<Element>)
 }
 
-public struct RxHeadPageConfigurationModel {
+public struct HeadPageConfigModel {
     let originIndex: Int
     let sourceView: UIView?
     let headerView: UIView?
     let headerHeight: CGFloat?
     let menuView: (UIView & MenuViewProtocol)?
+    let menuTitles: [String]
     let menuViewHeight: CGFloat
     let menuViewPinHeight: CGFloat
     let contentInset: UIEdgeInsets
@@ -35,6 +36,7 @@ public struct RxHeadPageConfigurationModel {
                 headerView: UIView? = nil,
                 headerHeight: CGFloat? = nil,
                 menuView: (UIView & MenuViewProtocol)?,
+                menuTitles: [String],
                 menuHeight: CGFloat,
                 menuViewPinHeight: CGFloat = 0,
                 contentInset: UIEdgeInsets = .zero,
@@ -44,6 +46,7 @@ public struct RxHeadPageConfigurationModel {
         self.headerView = headerView
         self.headerHeight = headerHeight
         self.menuView = menuView
+        self.menuTitles = menuTitles
         self.menuViewHeight = menuHeight
         self.menuViewPinHeight = menuViewPinHeight
         self.contentInset = contentInset
@@ -53,11 +56,11 @@ public struct RxHeadPageConfigurationModel {
 
 public class RxHeadPageViewControllerReactiveArrayDataSource {
     
-    public typealias Element = RxHeadPageConfigurationModel
+    public typealias Element = HeadPageConfigModel
     
     public typealias VCFactory = (Int, HeadPageViewControllerType) -> HeadPageViewControllerType
     
-    var model: RxHeadPageConfigurationModel?
+    var model: HeadPageConfigModel?
     
     public func modelAtIndex(_ index: Int) -> HeadPageViewControllerType? {
         return model?.viewControllers[index]
@@ -114,6 +117,10 @@ extension RxHeadPageViewControllerReactiveArrayDataSource: HeadPageViewControlle
     
     public func menuViewFor(_ pageController: HeadPageViewController) -> (UIView & MenuViewProtocol)? {
         return model?.menuView
+    }
+    
+    public func menuViewTitleFor(_ pageController: HeadPageViewController) -> [String] {
+        return model?.menuTitles ?? []
     }
     
     public func menuViewHeightFor(_ pageController: HeadPageViewController) -> CGFloat? {
