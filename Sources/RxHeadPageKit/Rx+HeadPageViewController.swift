@@ -13,7 +13,7 @@ import HeadPageKit
 extension Reactive where Base: HeadPageViewController {
     
     public func configuration<O: ObservableType>() -> (_ source: O) -> Disposable
-    where O.Element == RxHeadPageConfigurationModel {
+    where O.Element == HeadPageConfigModel {
         return { source in
             let dataSource = RxHeadPageViewControllerReactiveArrayDataSource { _, viewController in
                 return viewController
